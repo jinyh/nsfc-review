@@ -65,10 +65,43 @@ git submodule add https://github.com/jinyh/nsfc-review.git .claude/skills/nsfc-r
 - **B（可资助）**：整体合理但存在可修复的缺陷
 - **C（不予资助）**：存在致命缺陷
 
+## 在其他 AI 工具中使用
+
+核心审查逻辑位于 `references/review-prompt.md`，是一份独立的结构化 prompt，不依赖特定工具或模型，可在任何支持长上下文的 AI 平台中使用。
+
+### Cursor
+
+1. 将 `references/review-prompt.md` 内容复制到 `.cursorrules` 文件中，或作为对话开头粘贴
+2. 提供申请书文本（Cursor 对 PDF 支持有限，建议先转为文本）
+3. 要求模型按 prompt 中的五关逻辑进行审查
+
+### ChatGPT / GPT-4o
+
+1. 将 `references/review-prompt.md` 内容作为 System Prompt 或对话开头粘贴
+2. 上传申请书 PDF 或粘贴文本
+3. GPT-4o 支持联网搜索，可完成文献检索对标
+
+### 其他模型（DeepSeek、Gemini 等）
+
+同样将 prompt 内容粘贴到对话中即可。注意：
+- 文献检索能力取决于模型是否支持联网，不支持的需手动补充文献
+- 长申请书需要模型具备足够的上下文窗口
+- 学术推理深度因模型能力而异
+
+## 模型选择建议
+
+| 能力维度 | 推荐模型 |
+|----------|----------|
+| 学术推理与判断深度 | Claude Opus、GPT-4o |
+| 联网文献检索 | Claude Code（WebSearch）、ChatGPT |
+| 长文档处理 | Claude（200K）、Gemini（1M） |
+| 性价比 | DeepSeek、Claude Sonnet |
+
 ## 前置要求
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI 工具
-- Claude Code 需要能够联网检索文献（用于文献对标）
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI 工具（如使用 Skill 方式）
+- 联网能力（用于文献对标检索）
+- 或任何支持长上下文的 AI 工具 + `review-prompt.md`
 
 ## 许可证
 
